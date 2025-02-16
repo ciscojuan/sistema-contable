@@ -30,10 +30,11 @@ const cardProps = {
   ],
 };
 
+const iconMenu = cardProps.icon[0]
 export default async function Overview() {
   return (
     <>
-      <TopMenu title="Overview" />
+      <TopMenu title="Overview" icon={iconMenu} />
       <div className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         <div
           className="grid grid-cols-1 gap-5 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-3 mb-8 max-w-7xl mx-auto py-6 px-4 lg:px-8  "

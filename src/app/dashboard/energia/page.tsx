@@ -1,6 +1,5 @@
 import { Card, Graphs, Table, TopMenu } from "@/components";
 import React from "react";
-import { FaSearchengin } from "react-icons/fa";
 import { FcFlashOn } from "react-icons/fc";
 import { ImCoinDollar } from "react-icons/im";
 
@@ -12,7 +11,7 @@ const cardProps = {
 export default function ElectricityPage() {
   return (
     <>
-      <TopMenu title="Electicity Bids" />
+      <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
       <div className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* Cards */}
         <div
