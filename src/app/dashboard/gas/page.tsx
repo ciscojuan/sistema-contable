@@ -5,7 +5,7 @@ import { ImCoinDollar } from 'react-icons/im';
 
 const cardProps = {
   icon: [ <FaFireFlameCurved />, <ImCoinDollar />,],
-  color: ["text-yellow-500", "text-white"],
+  color: ["text-gray-500", "text-white"],
 };
 
 export default function GasPage () {
