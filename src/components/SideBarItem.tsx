@@ -1,15 +1,21 @@
 'use client'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
-    title: string;
-    icon: React.ReactNode;
-    path: string,
-    color: string
+  title: string;
+  icon: React.ReactNode;
+  path: string;
+  color: string;
+  toggleMenu: boolean;
+  setToggleMenu: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SideBarItem = ({title, icon, path, color}: Props)  => {
+
+
+
+export const SideBarItem = ({title, icon, path, color, toggleMenu, setToggleMenu}: Props)  => {
 
     const pathName = usePathname();
   return (
@@ -24,7 +30,7 @@ export const SideBarItem = ({title, icon, path, color}: Props)  => {
             className="ml-4 whitespace-nowrap"
             style={{opacity: 1, width: 'auto', willChange: 'auto'}}
           >
-            {title}
+            {!toggleMenu && title}
           </span>
         </div>
       </Link>

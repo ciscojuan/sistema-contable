@@ -15,6 +15,9 @@ export default {
       boxShadow: {
         card: "0px 25px 50px -12px rgba(0,0,0,0.5)",
       },
+      transitionProperty: {
+        width: "80px",
+      },
     },
   },
   plugins: [],

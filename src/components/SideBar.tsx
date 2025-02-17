@@ -10,7 +10,12 @@ import {
 } from "react-icons/io5";
 import { GrVmMaintenance } from "react-icons/gr";
 import { TfiWidgetized } from "react-icons/tfi";
+import { Dispatch, SetStateAction } from "react";
 
+interface Props {
+  toggleMenu: boolean;
+  setToggleMenu: Dispatch<SetStateAction<boolean>>;
+}
 const itemsMenu = [
   {
     title: "Overview",
@@ -56,15 +61,24 @@ const itemsMenu = [
   },
 ];
 
-export const SideBar = () => {
+export const SideBar = ({ toggleMenu, setToggleMenu }: Props) => {
   return (
     <>
-      <div className="flex flex-col p-2 items-start">
-        <IoMenuOutline size="32" />
+      <div className="flex flex-col p-2 items-start w-[50px] hover:bg-gray-700 hover:rounded-3xl ">
+        <IoMenuOutline
+          size="32"
+          onClick={() => setToggleMenu(!toggleMenu)}
+          className="text-white cursor-pointer "
+        />
       </div>
       <nav className="mt-8 flex-grow">
         {itemsMenu.map((item, index) => (
-          <SideBarItem key={index} {...item} />
+          <SideBarItem 
+          key={index} 
+          {...item} 
+          toggleMenu={toggleMenu}
+          setToggleMenu={setToggleMenu}
+          />
         ))}
       </nav>
     </>
