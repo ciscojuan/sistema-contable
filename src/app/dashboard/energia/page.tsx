@@ -1,13 +1,12 @@
-import { Card, Graphs, Table, TopMenu } from "@/components";
-import { NewRaw } from '@/components/NewRaw'
+import { Card, funciones, Graphs, Table, TopMenu } from "@/components";
+import { NewRaw } from "@/components/NewRaw";
 import prisma from "@/lib/prisma";
 import { FcFlashOn } from "react-icons/fc";
 import { ImCoinDollar } from "react-icons/im";
 
-
 export const metadata = {
- title: 'Dasboard - Energia',
- description: 'Dasboard - Energia',
+  title: "Dasboard - Energia",
+  description: "Dasboard - Energia",
 };
 
 const cardProps = {
@@ -16,36 +15,39 @@ const cardProps = {
 };
 
 export default async function ElectricityPage() {
+  const records = await prisma.energia.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  const consumoTotal = funciones.consumoTotal(records);
 
-const records = await prisma.energia.findMany({
-  orderBy:{
-    createdAt: "desc",
-  }
-})
+  const total = funciones.SumaValor(records);
+
+  const valorTotal = funciones.valorTotal(total);
+
   return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
       <div className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* Cards */}
-        <div
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-3 mb-8 max-w-7xl mx-auto py-6 px-4 lg:px-8 "
-          style={{ opacity: 1, willChange: "auto", transform: "none" }}
-        >
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-3 mb-8 max-w-7xl mx-auto py-6 px-4 lg:px-8 ">
           <Card
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
             title="KWh"
+            consumoTotal={consumoTotal}
           />
           <Card
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
-            title="Total"
+            valorTotal={valorTotal}
           />
         </div>
 
         {/* new Record */}
         <NewRaw />
-        
+
         {/* table */}
         <Table records={records} />
 

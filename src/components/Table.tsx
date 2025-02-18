@@ -1,3 +1,4 @@
+"use client";
 import {
   Administracion,
   Agua,
@@ -6,7 +7,7 @@ import {
   Internet,
   Telefono,
 } from "@prisma/client";
-import React from "react";
+import { usePathname } from "next/navigation";
 import { FaSearchengin } from "react-icons/fa";
 
 interface Props {
@@ -14,7 +15,9 @@ interface Props {
 }
 
 export const Table = ({ records = [] }: Props) => {
-  console.log(records);
+  const path = usePathname();
+
+  console.log(path);
   return (
     <div className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
       <div className="flex justify-between items-center mb-6">
@@ -33,14 +36,16 @@ export const Table = ({ records = [] }: Props) => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-700">
-          <thead>
+          <thead className="">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 DATE
               </th>
+
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 # GALONS
               </th>
+
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 MONTH
               </th>
@@ -59,9 +64,11 @@ export const Table = ({ records = [] }: Props) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
                   {new Date(raw.createdAt).toLocaleDateString()}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
                   {raw.consumo || "-"}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
                   {new Date(raw.createdAt).toLocaleString("default", {
                     month: "long",

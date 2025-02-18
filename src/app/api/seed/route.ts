@@ -33,7 +33,6 @@ export async function POST(request: Request) {
       throw new Error("No se encontró un bien con el nombre Sol Naciente");
     }
 
-
     const aguaObjects = await prisma.agua.createMany({
       data: [
         { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
@@ -100,7 +99,6 @@ export async function POST(request: Request) {
       ],
     });
 
-
     //  Correctly format the response
     return NextResponse.json({
       message: "Seed applied Successfully.",
@@ -115,5 +113,6 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const bienes = await prisma.bien.findMany();
   const agua = await prisma.agua.findMany();
-  return NextResponse.json({ bienes, agua });
+  const energia = await prisma.energia.findMany();
+  return NextResponse.json({ bienes, agua, energia });
 }
