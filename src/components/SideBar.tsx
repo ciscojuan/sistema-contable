@@ -73,12 +73,7 @@ export const SideBar = ({ toggleMenu, setToggleMenu }: Props) => {
       </div>
       <nav className="mt-8 flex-grow">
         {itemsMenu.map((item, index) => (
-          <SideBarItem 
-          key={index} 
-          {...item} 
-          toggleMenu={toggleMenu}
-          setToggleMenu={setToggleMenu}
-          />
+          <SideBarItem key={index} {...item} toggleMenu={toggleMenu} />
         ))}
       </nav>
     </>

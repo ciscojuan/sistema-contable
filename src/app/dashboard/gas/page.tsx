@@ -1,14 +1,23 @@
 import { Card, Graphs, Table, TopMenu } from '@/components'
+import prisma from '@/lib/prisma';
 import React from 'react'
 import { FaFireFlameCurved } from 'react-icons/fa6';
 import { ImCoinDollar } from 'react-icons/im';
+
+export const metadata = {
+  title: "Dashboard - Gas",
+  description: "Dashboard - Gas",
+};
 
 const cardProps = {
   icon: [ <FaFireFlameCurved />, <ImCoinDollar />,],
   color: ["text-gray-500", "text-white"],
 };
 
-export default function GasPage () {
+export default async function GasPage () {
+  const records = await prisma.gas.findMany({orderBy: {
+    createdAt: "desc",
+  }})
   return (
     <>
     <TopMenu title="Gas Bids" icon={cardProps.icon[0]}/>
@@ -31,7 +40,7 @@ export default function GasPage () {
       </div>
 
       {/* table */}
-      <Table />
+      <Table records={records} />
 
       {/* widgets */}
       <div className="grid grid-col-1 lg:grid-cols-2 gap-8">

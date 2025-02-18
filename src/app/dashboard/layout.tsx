@@ -1,5 +1,4 @@
 "use client";
-
 import { SideBar } from "@/components";
 import { useState } from "react";
 
@@ -18,7 +17,9 @@ export default function DashboardLayout({
       </div>
 
       <div
-        className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${toggleMenu ? 'w-21' : 'w-64'}`}
+        className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+          toggleMenu ? "w-21" : "w-64"
+        }`}
       >
         <div className="h-full bg-gray-800 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
           <SideBar toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />

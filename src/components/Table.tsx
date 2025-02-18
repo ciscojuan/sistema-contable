@@ -1,8 +1,20 @@
+import {
+  Administracion,
+  Agua,
+  Energia,
+  Gas,
+  Internet,
+  Telefono,
+} from "@prisma/client";
 import React from "react";
 import { FaSearchengin } from "react-icons/fa";
-import { TbId } from "react-icons/tb";
 
-export const Table = () => {
+interface Props {
+  records?: Agua[] | Gas[] | Energia[];
+}
+
+export const Table = ({ records = [] }: Props) => {
+  console.log(records);
   return (
     <div className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
       <div className="flex justify-between items-center mb-6">
@@ -39,35 +51,27 @@ export const Table = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-700">
-            <tr style={{ opacity: "1", willChange: "auto" }}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                <TbId /> 10/02/2025
-              </td>
-            </tr>
-            <tr style={{ opacity: "1", willChange: "auto" }}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                <TbId /> 10/02/2025
-              </td>
-            </tr>
-            <tr style={{ opacity: "1", willChange: "auto" }}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                <TbId /> 10/02/2025
-              </td>
-            </tr>
-            <tr style={{ opacity: "1", willChange: "auto" }}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                <TbId color="red" /> 10/02/2025
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                10
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                August
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                187 000
-              </td>
-            </tr>
+            {records.map((raw) => (
+              <tr
+                key={raw.registro_id}
+                style={{ opacity: "1", willChange: "auto" }}
+              >
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
+                  {new Date(raw.createdAt).toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
+                  {raw.consumo || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+                  {new Date(raw.createdAt).toLocaleString("default", {
+                    month: "long",
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+                  {raw.valor || "-"}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

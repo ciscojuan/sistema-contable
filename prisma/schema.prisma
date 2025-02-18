@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bien {
+  bien_id        String           @id @default(uuid())
+  nombre_bien    String
+  Agua           Agua[]
+  Gas            Gas[]
+  Energia        Energia[]
+  Internet       Internet[]
+  Telefono       Telefono[]
+  Administracion Administracion[]
+}
+
+model Agua {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  consumo     Int
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}
+
+model Gas {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  consumo     Int
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}
+
+model Energia {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  consumo     Int
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}
+
+model Internet {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}
+
+model Telefono {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}
+
+model Administracion {
+  registro_id String   @id @default(uuid())
+  bienId      String
+  valor       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Bien bien @relation(fields: [bienId], references: [bien_id])
+}

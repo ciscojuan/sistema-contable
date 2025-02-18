@@ -9,13 +9,12 @@ interface Props {
   path: string;
   color: string;
   toggleMenu: boolean;
-  setToggleMenu: Dispatch<SetStateAction<boolean>>;
 }
 
 
 
 
-export const SideBarItem = ({title, icon, path, color, toggleMenu, setToggleMenu}: Props)  => {
+export const SideBarItem = ({title, icon, path, color, toggleMenu}: Props)  => {
 
     const pathName = usePathname();
   return (

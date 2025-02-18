@@ -1,14 +1,27 @@
 import { Card, Graphs, Table, TopMenu } from "@/components";
-import React from "react";
+import { NewRaw } from '@/components/NewRaw'
+import prisma from "@/lib/prisma";
 import { FcFlashOn } from "react-icons/fc";
 import { ImCoinDollar } from "react-icons/im";
+
+
+export const metadata = {
+ title: 'Dasboard - Energia',
+ description: 'Dasboard - Energia',
+};
 
 const cardProps = {
   icon: [<FcFlashOn />, <ImCoinDollar />],
   color: ["text-yellow-500", "text-white"],
 };
 
-export default function ElectricityPage() {
+export default async function ElectricityPage() {
+
+const records = await prisma.energia.findMany({
+  orderBy:{
+    createdAt: "desc",
+  }
+})
   return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
@@ -30,8 +43,11 @@ export default function ElectricityPage() {
           />
         </div>
 
+        {/* new Record */}
+        <NewRaw />
+        
         {/* table */}
-        <Table />
+        <Table records={records} />
 
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
