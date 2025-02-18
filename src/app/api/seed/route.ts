@@ -45,6 +45,62 @@ export async function POST(request: Request) {
       ],
     });
 
+    const energiaObjects = await prisma.energia.createMany({
+      data: [
+        { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 20, valor: 200000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 25, valor: 250000 },
+        { bienId: sNacienteId.bien_id, consumo: 30, valor: 300000 },
+        { bienId: sNacienteId.bien_id, consumo: 35, valor: 350000 },
+        { bienId: sNacienteId.bien_id, consumo: 1, valor: 150000 },
+      ],
+    });
+
+    const gasObjects = await prisma.gas.createMany({
+      data: [
+        { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 20, valor: 200000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 25, valor: 250000 },
+        { bienId: sNacienteId.bien_id, consumo: 30, valor: 300000 },
+        { bienId: sNacienteId.bien_id, consumo: 35, valor: 350000 },
+        { bienId: sNacienteId.bien_id, consumo: 1, valor: 150000 },
+      ],
+    });
+
+    const internetObjects = await prisma.internet.createMany({
+      data: [
+        { bienId: aAcapulcoId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 200000 },
+        { bienId: aAcapulcoId.bien_id, valor: 250000 },
+        { bienId: sNacienteId.bien_id, valor: 300000 },
+        { bienId: sNacienteId.bien_id, valor: 350000 },
+        { bienId: sNacienteId.bien_id, valor: 150000 },
+      ],
+    });
+
+    const telefonoObjects = await prisma.telefono.createMany({
+      data: [
+        { bienId: aAcapulcoId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 200000 },
+        { bienId: aAcapulcoId.bien_id, valor: 250000 },
+        { bienId: sNacienteId.bien_id, valor: 300000 },
+        { bienId: sNacienteId.bien_id, valor: 350000 },
+        { bienId: sNacienteId.bien_id, valor: 150000 },
+      ],
+    });
+
+    const administracionObjects = await prisma.administracion.createMany({
+      data: [
+        { bienId: aAcapulcoId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 200000 },
+        { bienId: aAcapulcoId.bien_id, valor: 250000 },
+        { bienId: sNacienteId.bien_id, valor: 300000 },
+        { bienId: sNacienteId.bien_id, valor: 350000 },
+        { bienId: sNacienteId.bien_id, valor: 150000 },
+      ],
+    });
+
+
     //  Correctly format the response
     return NextResponse.json({
       message: "Seed applied Successfully.",

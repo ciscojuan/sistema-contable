@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Agua } from "@prisma/client";
 
 /* export const addRaw = async (monto, valor) =>{
     try{
