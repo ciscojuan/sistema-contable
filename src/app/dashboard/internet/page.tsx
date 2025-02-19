@@ -1,4 +1,10 @@
-import { Card, funciones, Graphs, Table, TopMenu } from "@/components";
+import {
+  Card,
+  Graphs,
+  internetActions,
+  Table,
+  TopMenu,
+} from "@/components";
 import prisma from "@/lib/prisma";
 import React from "react";
 import { ImCoinDollar } from "react-icons/im";
@@ -10,14 +16,8 @@ const cardProps = {
 };
 
 export default async function InternetPage() {
-  const records = await prisma.internet.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-  const total = funciones.SumaValor(records);
-
-  const valorTotal = parseInt(funciones.valorTotal(total));
+  const vTotal = await internetActions.getAcapulcoTotal();
+  const records = await internetActions.getAcapulcoRecords();
   return (
     <>
       <TopMenu title="Gas Bids" icon={cardProps.icon[0]} />
@@ -31,7 +31,7 @@ export default async function InternetPage() {
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
             title="Total"
-            valorTotal={valorTotal}
+            valorTotal={vTotal}
           />
         </div>
 

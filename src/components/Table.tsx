@@ -9,6 +9,7 @@ import {
 } from "@prisma/client";
 import { usePathname } from "next/navigation";
 import { FaSearchengin } from "react-icons/fa";
+import { funciones } from "@/components";
 
 interface Props {
   records?:
@@ -52,20 +53,20 @@ export const Table = ({ records = [] }: Props) => {
         <table className="min-w-full divide-y divide-gray-700">
           <thead className="">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
                 DATE
               </th>
 
               {!excludedPaths.includes(path) && (
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
                   # GALONS
                 </th>
               )}
 
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
                 MONTH
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
                 TOTAL
               </th>
             </tr>
@@ -82,7 +83,7 @@ export const Table = ({ records = [] }: Props) => {
                 </td>
 
                 {!excludedPaths.includes(path) && hasConsumo(raw) && (
-                  <td className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <td className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
                     {raw.consumo}
                   </td>
                 )}
@@ -93,7 +94,7 @@ export const Table = ({ records = [] }: Props) => {
                   })}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
-                  {raw.valor || "-"}
+                  {funciones.valorTotal(raw.valor) || "-"}
                 </td>
               </tr>
             ))}

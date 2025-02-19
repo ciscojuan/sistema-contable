@@ -11,6 +11,7 @@ import {
 import { GrVmMaintenance } from "react-icons/gr";
 import { TfiWidgetized } from "react-icons/tfi";
 import { Dispatch, SetStateAction } from "react";
+import { TipoBien } from "./TipoBien";
 
 interface Props {
   toggleMenu: boolean;

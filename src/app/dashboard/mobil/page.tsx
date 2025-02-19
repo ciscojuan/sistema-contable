@@ -1,13 +1,15 @@
-import { Card, Graphs, Table, TopMenu } from '@/components';
-import React from 'react'
-import { FaMobileAlt } from 'react-icons/fa';
-import { ImCoinDollar } from 'react-icons/im';
+import { Card, Graphs, Table, telefonoActions, TopMenu } from "@/components";
+import React from "react";
+import { FaMobileAlt } from "react-icons/fa";
+import { ImCoinDollar } from "react-icons/im";
 const cardProps = {
   icon: [<FaMobileAlt />, <ImCoinDollar />],
   color: ["text-green-500", "text-white"],
 };
-export default function MobilPage() {
-return (
+export default async function MobilPage() {
+  const vTotal = await telefonoActions.getAcapulcoTotal();
+  const records = await telefonoActions.getAcapulcoRecords();
+  return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
       <div className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
@@ -19,17 +21,13 @@ return (
           <Card
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
-            title="KWh"
-          />
-          <Card
-            icon={cardProps.icon[1]}
-            color={cardProps.color[1]}
             title="Total"
+            valorTotal={vTotal}
           />
         </div>
 
         {/* table */}
-        <Table />
+        <Table records={records} />
 
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">

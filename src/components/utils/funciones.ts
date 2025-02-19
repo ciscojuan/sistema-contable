@@ -7,9 +7,11 @@ export const SumaValor = (records: any) => {
 };
 
 export const valorTotal = (total: number) => {
-  return (
-    total.toLocaleString("es-CO", {
-      minimumFractionDigits: 0, // Opcional, elimina los decimales si no son necesarios
-    }) + " COP"
-  );
+  // Convertimos el número a string
+  let strValue = total.toString();
+
+  // Usamos una expresión regular para insertar un espacio cada tres dígitos
+  let formattedValue = strValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+  return formattedValue;
 };

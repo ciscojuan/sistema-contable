@@ -1,4 +1,4 @@
-import { Card, Graphs, Table, TopMenu } from "@/components";
+import { aguaActions, Card, Graphs, Table, TopMenu } from "@/components";
 import prisma from "@/lib/prisma";
 import { ImCoinDollar } from "react-icons/im";
 import { IoWater } from "react-icons/io5";
@@ -14,12 +14,9 @@ const cardProps = {
 };
 
 export default async function WaterPage() {
-  const records = await prisma.agua.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
+  const records = await aguaActions.getAcapulcoRecords()
+  const valorTotal = await aguaActions.getAcapulcoTotal()
+  const consumoTotal =await aguaActions.getAcapulcoConsumoTotal()
   return (
     <>
       <TopMenu title="Water Bids" icon={cardProps.icon[0]} />
@@ -33,11 +30,13 @@ export default async function WaterPage() {
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
             title={`m³ `}
+            consumoTotal={consumoTotal}
           />
           <Card
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
             title="Total"
+            valorTotal={(valorTotal).toString()}
           />
         </div>
 

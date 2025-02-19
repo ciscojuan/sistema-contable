@@ -1,4 +1,11 @@
-import { Card, funciones, Graphs, Table, TopMenu } from "@/components";
+import {
+  Card,
+  energiaActions,
+  funciones,
+  Graphs,
+  Table,
+  TopMenu,
+} from "@/components";
 import { NewRaw } from "@/components/NewRaw";
 import prisma from "@/lib/prisma";
 import { FcFlashOn } from "react-icons/fc";
@@ -15,16 +22,11 @@ const cardProps = {
 };
 
 export default async function ElectricityPage() {
-  const records = await prisma.energia.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-  const consumoTotal = funciones.consumoTotal(records);
+  const records = await energiaActions.getAcapulcoRecords();
 
-  const total = funciones.SumaValor(records);
+  const consumoTotal = await energiaActions.getAcapulcoConsumoTotal();
 
-  const valorTotal = parseInt(funciones.valorTotal(total));
+  const valorTotal = await energiaActions.getAcapulcoValorTotal();
 
   return (
     <>

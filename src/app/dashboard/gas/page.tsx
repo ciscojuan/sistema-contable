@@ -1,4 +1,4 @@
-import { Card, funciones, Graphs, Table, TopMenu } from "@/components";
+import { Card, funciones, gasActions, Graphs, Table, TopMenu } from "@/components";
 import prisma from "@/lib/prisma";
 import React from "react";
 import { FaFireFlameCurved } from "react-icons/fa6";
@@ -15,18 +15,10 @@ const cardProps = {
 };
 
 export default async function GasPage() {
-  const records = await prisma.gas.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const records = await gasActions.getAcapulcoRecords()
 
-  const consumoTotal = funciones.consumoTotal(records);
-
-  const total = funciones.SumaValor(records);
-
-  const valorTotal = parseInt(funciones.valorTotal(total));
-
+  const valorTotal = await gasActions.getAcapulcoValorTotal()
+  const consumoTotal =await gasActions.getAcapulcoConsumoTotal()
   return (
     <>
       <TopMenu title="Gas Bids" icon={cardProps.icon[0]} />
@@ -43,7 +35,7 @@ export default async function GasPage() {
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
             title="Total"
-            valorTotal={valorTotal}
+            valorTotal={(valorTotal).toString()}
           />
         </div>
 

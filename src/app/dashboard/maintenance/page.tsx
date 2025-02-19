@@ -1,4 +1,4 @@
-import { Card, Graphs, Table, TopMenu } from "@/components";
+import { adminActions, Card, Graphs, Table, TopMenu } from "@/components";
 import React from "react";
 import { GrVmMaintenance } from "react-icons/gr";
 import { ImCoinDollar } from "react-icons/im";
@@ -7,7 +7,9 @@ const cardProps = {
   icon: [<GrVmMaintenance />, <ImCoinDollar />],
   color: ["text-red-500", "text-white"],
 };
-export default function MaintenancePage() {
+export default async function MaintenancePage() {
+  const vTotal =  await adminActions.getAcapulcoTotal()
+  const records= await adminActions.getAcapulcoRecords()
   return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
@@ -20,17 +22,14 @@ export default function MaintenancePage() {
           <Card
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
-            title="KWh"
-          />
-          <Card
-            icon={cardProps.icon[1]}
-            color={cardProps.color[1]}
             title="Total"
+            valorTotal={vTotal}
           />
+
         </div>
 
         {/* table */}
-        <Table />
+        <Table  records={records}/>
 
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
