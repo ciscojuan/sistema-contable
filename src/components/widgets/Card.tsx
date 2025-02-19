@@ -2,8 +2,8 @@ interface Props {
   icon: React.ReactNode;
   color: string;
   title?: string;
-  consumoTotal?: Number;
-  valorTotal?: Number;
+  consumoTotal?: number;
+  valorTotal?: number;
 }
 
 export const Card = ({
