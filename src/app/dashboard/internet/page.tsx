@@ -17,7 +17,7 @@ export default async function InternetPage() {
   });
   const total = funciones.SumaValor(records);
 
-  const valorTotal = funciones.valorTotal(total);
+  const valorTotal = parseInt(funciones.valorTotal(total));
   return (
     <>
       <TopMenu title="Gas Bids" icon={cardProps.icon[0]} />

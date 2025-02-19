@@ -11,7 +11,13 @@ import { usePathname } from "next/navigation";
 import { FaSearchengin } from "react-icons/fa";
 
 interface Props {
-  records?: Agua[] | Gas[] | Energia[];
+  records?:
+    | Agua[]
+    | Gas[]
+    | Energia[]
+    | Internet[]
+    | Telefono[]
+    | Administracion[];
 }
 
 export const Table = ({ records = [] }: Props) => {
@@ -42,9 +48,11 @@ export const Table = ({ records = [] }: Props) => {
                 DATE
               </th>
 
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                # GALONS
-              </th>
+              { (
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  # GALONS
+                </th>
+              )}
 
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 MONTH
@@ -65,9 +73,11 @@ export const Table = ({ records = [] }: Props) => {
                   {new Date(raw.createdAt).toLocaleDateString()}
                 </td>
 
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
-                  {raw.consumo || "-"}
-                </td>
+                {(
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
+                    {raw.consumo}
+                  </td>
+                )}
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
                   {new Date(raw.createdAt).toLocaleString("default", {
