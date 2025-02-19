@@ -20,12 +20,18 @@ interface Props {
     | Administracion[];
 }
 
-const excludedPaths = ["/dashboard/internet", "/dashboard/mobil", "/dashboard/maintenance"];
+const excludedPaths = [
+  "/dashboard/internet",
+  "/dashboard/mobil",
+  "/dashboard/maintenance",
+];
 
 export const Table = ({ records = [] }: Props) => {
   const path = usePathname();
-
-  console.log(path);
+  const hasConsumo = (record: any): record is Agua | Gas | Energia => {
+    return "consumo" in record;
+  };
+  console.log(typeof records);
   return (
     <div className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
       <div className="flex justify-between items-center mb-6">
@@ -75,10 +81,10 @@ export const Table = ({ records = [] }: Props) => {
                   {new Date(raw.createdAt).toLocaleDateString()}
                 </td>
 
-                {!excludedPaths.includes(path) && (
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                {!excludedPaths.includes(path) && hasConsumo(raw) && (
+                  <td className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     {raw.consumo}
-                  </th>
+                  </td>
                 )}
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
