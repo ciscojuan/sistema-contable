@@ -20,6 +20,8 @@ interface Props {
     | Administracion[];
 }
 
+const excludedPaths = ["/dashboard/internet", "/dashboard/mobil", "/dashboard/maintenance"];
+
 export const Table = ({ records = [] }: Props) => {
   const path = usePathname();
 
@@ -48,7 +50,7 @@ export const Table = ({ records = [] }: Props) => {
                 DATE
               </th>
 
-              { (
+              {!excludedPaths.includes(path) && (
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                   # GALONS
                 </th>
@@ -73,10 +75,10 @@ export const Table = ({ records = [] }: Props) => {
                   {new Date(raw.createdAt).toLocaleDateString()}
                 </td>
 
-                {(
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 ">
+                {!excludedPaths.includes(path) && (
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     {raw.consumo}
-                  </td>
+                  </th>
                 )}
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
