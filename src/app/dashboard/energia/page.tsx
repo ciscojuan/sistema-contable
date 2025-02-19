@@ -24,7 +24,7 @@ export default async function ElectricityPage() {
 
   const total = funciones.SumaValor(records);
 
-  const valorTotal = funciones.valorTotal(total);
+  const valorTotal = parseInt(funciones.valorTotal(total));
 
   return (
     <>
