@@ -21,11 +21,11 @@ export default async function GasPage() {
     },
   });
 
-   const consumoTotal = funciones.consumoTotal(records)
- 
-   const total = funciones.SumaValor(records)
-   
-   const valorTotal = funciones.valorTotal(total)
+  const consumoTotal = funciones.consumoTotal(records);
+
+  const total = funciones.SumaValor(records);
+
+  const valorTotal = parseInt(funciones.valorTotal(total));
 
   return (
     <>
