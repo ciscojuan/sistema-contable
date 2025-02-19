@@ -31,7 +31,7 @@ export const Table = ({ records = [] }: Props) => {
   const hasConsumo = (record: any): record is Agua | Gas | Energia => {
     return "consumo" in record;
   };
-  console.log(typeof records);
+
   return (
     <div className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
       <div className="flex justify-between items-center mb-6">
