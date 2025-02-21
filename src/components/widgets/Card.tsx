@@ -2,7 +2,7 @@ interface Props {
   icon: React.ReactNode;
   color: string;
   title?: string;
-  consumoTotal?: string;
+  consumoTotal?: number;
   valorTotal?: string;
 }
 
