@@ -86,7 +86,15 @@ export const getMosqueraRecords = async () => {
   return records;
 };
 
-export const getMosqueraTotal = async () => {
+export const getMosqueraConsumoTotal = async () => {
+  const records = await getMosqueraRecords();
+
+  const total = records.reduce((acc, record) => acc + record.valor, 0);
+  const vTotal = funciones.valorTotal(total);
+  return vTotal;
+};
+
+export const getMosqueraValorTotal = async () => {
   const records = await getMosqueraRecords();
 
   const total = records.reduce((acc, record) => acc + record.valor, 0);

@@ -1,51 +1,62 @@
+"use client";
 import {
   Card,
   energiaActions,
   funciones,
   Graphs,
+  serverActions,
   Table,
   TopMenu,
 } from "@/components";
 import { NewRaw } from "@/components/NewRaw";
-import prisma from "@/lib/prisma";
+import { bienContext } from "@/context/Context";
+import { useContext, useEffect } from "react";
 import { FcFlashOn } from "react-icons/fc";
 import { ImCoinDollar } from "react-icons/im";
-
-export const metadata = {
-  title: "Dasboard - Energia",
-  description: "Dasboard - Energia",
-};
 
 const cardProps = {
   icon: [<FcFlashOn />, <ImCoinDollar />],
   color: ["text-yellow-500", "text-white"],
 };
 
-export default async function ElectricityPage() {
-  const records = await energiaActions.getAcapulcoRecords();
+export default function ElectricityPage() {
+  const { idBien, records, setRecords } = useContext(bienContext);
 
-  const consumoTotal = await energiaActions.getAcapulcoConsumoTotal();
+  useEffect(() => {
+    if (!idBien) return; // Verifica que `idBien` tenga un valor válido
 
-  const valorTotal = await energiaActions.getAcapulcoValorTotal();
+    const getRecords = async () => {
+      try {
+        await serverActions
+          .getRecords(idBien)
+          .then((records) => setRecords(records)); // Establece los registros correctamente
+      } catch (error) {
+        console.error("Error fetching records:", error);
+      }
+    };
 
+    getRecords();
+  }, [idBien]);
+
+  console.log(records);
   return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
       <div className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-3 mb-8 max-w-7xl mx-auto py-6 px-4 lg:px-8 ">
+        {/* <div className="grid grid-cols-1 gap-5 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-3 mb-8 max-w-7xl mx-auto py-6 px-4 lg:px-8 ">
           <Card
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
             title="KWh"
-            consumoTotal={consumoTotal}
+            consumoTotal={consumoTotal.toString()}
           />
           <Card
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
             valorTotal={valorTotal}
           />
-        </div>
+        </div> */}
 
         {/* new Record */}
         <NewRaw />

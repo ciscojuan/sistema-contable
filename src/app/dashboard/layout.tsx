@@ -1,5 +1,6 @@
 "use client";
 import { SideBar } from "@/components";
+import { BienContext } from "@/context/BienContext";
 import { useState } from "react";
 
 export default function DashboardLayout({
@@ -26,7 +27,9 @@ export default function DashboardLayout({
         </div>
       </div>
       <div className="flex-1 overflow-auto relative z-10">
-        <main className="">{children}</main>
+        <BienContext>
+          <main className="">{children}</main>
+        </BienContext>
       </div>
     </div>
   );
