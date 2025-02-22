@@ -1,58 +1,92 @@
 "use client";
-import { FormEvent, useState } from "react";
-import { usePathname } from "next/navigation";
-import { addRaw } from "./actions/agua.route";
+import { FormEvent, useContext, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { bienContext } from "@/context/Context";
+import { addRecord } from "./actions/serverAction";
 
 export const NewRaw = () => {
   const [consumo, setConsumo] = useState("");
   const [valor, setValor] = useState("");
+  const { idBien, setRecords } = useContext(bienContext);
+  const pathname = usePathname();
 
-  const path = usePathname();
+  const router = useRouter();
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    let consumoNum =parseInt(consumo)
-    let valorNum = parseInt(valor)
-    await addRaw(consumoNum, valorNum);
+    let consumoNum = parseInt(consumo);
+    let valorNum = parseInt(valor);
 
-    setConsumo("");
-    setValor("");
+    try {
+      const record = await addRecord(consumoNum, valorNum, idBien, pathname);
+
+      if (!record) {
+        console.error("No se pudo agregar el registro.");
+        return;
+      }
+
+      // Agrega el nuevo registro al estado global
+      setRecords((prev) => [...prev, record]);
+
+      // Limpia los campos del formulario
+      setConsumo("");
+      setValor("");
+
+      // Redirige o refresca la página
+      router.refresh();
+    } catch (error) {
+      console.error("Error al agregar registro:", error);
+    }
   };
-
   return (
-    <div className="flex">
-      <form onSubmit={onSubmit} className="flex items-center justify-center">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-500 text-md font-bold mb-2">
-            ¿Cuántos KWh consumiste este mes?
+    <div className="w-full max-w-md">
+      <form
+        className="bg-transparent border shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        onSubmit={onSubmit}
+      >
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="kwh"
+          >
+            Consumo
           </label>
           <input
-            className="appearance-none block w-[100px] bg-transparent text-gray-500 border-b-2 border-white rounded py-3 px-4 mb-5 leading-tight focus:outline-none"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="kwh"
             type="text"
-            placeholder="¿KWh?"
+            placeholder="Kwh"
             value={consumo}
             onChange={({ target }) => setConsumo(target.value)}
           />
         </div>
-
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-500 text-md font-bold mb-2">
-            ¿Cuánto costo este mes la energia?
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
+            Valor
           </label>
           <input
-            className="appearance-none block w-[100px] bg-transparent text-gray-500 border-b-2 border-white rounded py-3 px-4 mb-5 leading-tight focus:outline-none"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="valor"
             type="text"
-            placeholder="$"
-            onChange={({ target }) => setValor(target.value)}
+            placeholder="$ "
             value={valor}
+            onChange={({ target }) => setValor(target.value)}
           />
+          <p className="text-red-500 text-xs italic">
+            Please choose a password.
+          </p>
         </div>
-        <button
-          type="submit"
-          className="flex items-center justify-center rounded ml-2 bg-sky-500 p-2 text-white hover:bg-sky-700 transition-all"
-        >
-          Crear
-        </button>
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Guardar Registro
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -1,14 +1,8 @@
-import {
-  adminActions,
-  aguaActions,
-  Card,
-  energiaActions,
-  gasActions,
-  Graphs,
-  internetActions,
-  telefonoActions,
-  TopMenu,
-} from "@/components";
+"use client";
+import { Card, Graphs, serverActions, TopMenu } from "@/components";
+import { bienContext } from "@/context/Context";
+import { usePathname } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaFireFlameCurved } from "react-icons/fa6";
 import { GrVmMaintenance } from "react-icons/gr";
@@ -42,13 +36,41 @@ const cardProps = {
 
 const iconMenu = cardProps.icon[0];
 
-export default async function Overview() {
-  const vAdminAcapulco = await adminActions.getAcapulcoTotal();
-  const vTelefonoAcapulco = await telefonoActions.getAcapulcoTotal();
-  const vInternetAcapulco = await internetActions.getAcapulcoTotal();
-  const vAguaAcapulco = await aguaActions.getAcapulcoTotal();
-  const vEnergiaAcapulco = await energiaActions.getAcapulcoValorTotal();
-  const vGasAcapulco = await gasActions.getAcapulcoValorTotal();
+export default function Overview() {
+  const { idBien } = useContext(bienContext);
+  const [totales, setTotales] = useState<{
+    agua: number;
+    energia: number;
+    gas: number;
+    internet: number;
+    telefono: number;
+    administracion: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!idBien) return;
+
+    const getRecords = async () => {
+      try {
+        const res = await serverActions.getTotalValues(idBien);
+        setTotales(
+          res ?? {
+            // Evita valores null asegurando un objeto válido
+            agua: 0,
+            energia: 0,
+            gas: 0,
+            internet: 0,
+            telefono: 0,
+            administracion: 0,
+          }
+        );
+      } catch (error) {
+        console.error("Error fetching records:", error);
+      }
+    };
+
+    getRecords();
+  }, [idBien]);
 
   return (
     <>
@@ -61,32 +83,32 @@ export default async function Overview() {
           <Card
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
-            valorTotal={vEnergiaAcapulco}
+            valorTotal={totales?.energia.toString()}
           />
           <Card
             icon={cardProps.icon[1]}
             color={cardProps.color[1]}
-            valorTotal={vGasAcapulco}
+            valorTotal={totales?.gas.toString()}
           />
           <Card
             icon={cardProps.icon[2]}
             color={cardProps.color[2]}
-            valorTotal={vInternetAcapulco}
+            valorTotal={totales?.internet.toString()}
           />
           <Card
             icon={cardProps.icon[3]}
             color={cardProps.color[3]}
-            valorTotal={vAdminAcapulco}
+            valorTotal={totales?.administracion.toString()}
           />
           <Card
             icon={cardProps.icon[4]}
             color={cardProps.color[4]}
-            valorTotal={vTelefonoAcapulco}
+            valorTotal={totales?.telefono.toString()}
           />
           <Card
             icon={cardProps.icon[5]}
             color={cardProps.color[5]}
-            valorTotal={vAguaAcapulco}
+            valorTotal={totales?.agua.toString()}
           />
         </div>
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">

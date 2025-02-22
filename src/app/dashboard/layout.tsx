@@ -26,9 +26,12 @@ export default function DashboardLayout({
           <SideBar toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         </div>
       </div>
-      <div className="flex-1 overflow-auto relative z-10">
+      <div className="flex-1 overflow-auto relative z-10 my-2">
         <BienContext>
           <main className="">{children}</main>
+          <p className="text-center text-gray-500 text-xs">
+            &copy; 2025 COD_ Corp. All rights reserved.
+          </p>
         </BienContext>
       </div>
     </div>

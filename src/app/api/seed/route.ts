@@ -114,5 +114,17 @@ export async function GET(request: Request) {
   const bienes = await prisma.bien.findMany();
   const agua = await prisma.agua.findMany();
   const energia = await prisma.energia.findMany();
-  return NextResponse.json({ bienes, agua, energia });
+  const gas = await prisma.gas.findMany();
+  const internet = await prisma.internet.findMany();
+  const telefono = await prisma.telefono.findMany();
+  const administracion = await prisma.administracion.findMany();
+  return NextResponse.json({
+    bienes,
+    agua,
+    energia,
+    gas,
+    internet,
+    telefono,
+    administracion,
+  });
 }

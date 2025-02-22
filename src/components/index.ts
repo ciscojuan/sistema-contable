@@ -6,10 +6,4 @@ export { TipoBien } from "./TipoBien";
 export { Table } from "./Table";
 export * as Graphs from "./widgets/Graphs";
 export * as funciones from "./utils/funciones";
-export * as adminActions from "./actions/administracion.route";
-export * as aguaActions from "./actions/agua.route";
-export * as energiaActions from "./actions/energia.route";
-export * as gasActions from "./actions/gas.route";
-export * as telefonoActions from "./actions/telefono.route";
-export * as internetActions from "./actions/internet.route";
-export * as serverActions from './actions/serverAction'
+export * as serverActions from "./actions/serverAction";
