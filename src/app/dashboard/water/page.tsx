@@ -8,7 +8,7 @@ import {
   TopMenu,
 } from "@/components";
 import { NewRaw } from "@/components/NewRaw";
-import { SimpleBarChart } from "@/components/widgets/BarChart";
+import { SimpleBarChart } from "@/components/widgets/SimpleBarChart";
 import { bienContext } from "@/context/Context";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
