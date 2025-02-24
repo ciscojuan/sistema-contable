@@ -7,3 +7,5 @@ export { Table } from "./Table";
 export * as Graphs from "./widgets/Graphs";
 export * as funciones from "./utils/funciones";
 export * as serverActions from "./actions/serverAction";
+export { SimpleBarChart } from "./widgets/BarChart";
+export { StackedBar } from "./widgets/StackedBar";

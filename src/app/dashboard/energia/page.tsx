@@ -4,11 +4,12 @@ import {
   funciones,
   Graphs,
   serverActions,
+  SimpleBarChart,
   Table,
   TopMenu,
 } from "@/components";
 import { NewRaw } from "@/components/NewRaw";
-import { bienContext } from "@/context/Context";
+import { bienContext, RecordType } from "@/context/Context";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FcFlashOn } from "react-icons/fc";
@@ -23,21 +24,28 @@ export default function ElectricityPage() {
   const { idBien, records, setRecords } = useContext(bienContext);
   const [open, setOpen] = useState(false);
   const pathName = usePathname();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
+    console.log(`Primer console logconid: ${idBien}`)
     if (!idBien) return; // Verifica que `idBien` tenga un valor válido
 
     const getRecords = async () => {
+      setIsLoading(true); //Setting loading to true.
       try {
-        await serverActions
-          .getRecords(idBien, pathName)
-          .then((records) => setRecords(records)); // Establece los registros correctamente
+        const response: RecordType[] = await serverActions.getRecords(
+          idBien,
+          pathName
+        );
+        setRecords(response); // Establece los registros correctamente
       } catch (error) {
         console.error("Error fetching records:", error);
+        setIsLoading(false); //Setting loading to false.
       }
     };
 
     getRecords();
-  }, [idBien]);
+  }, [idBien, pathName, setRecords]);
 
   const consumoTotal = funciones.consumoTotal(records);
   const valorTotal = funciones.SumaValor(records);
@@ -79,7 +87,7 @@ export default function ElectricityPage() {
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           <Graphs.CircleChart />
           <Graphs.LinearChart />
-          <Graphs.BarChart />
+          <SimpleBarChart records={records} />
         </div>
       </div>
     </>

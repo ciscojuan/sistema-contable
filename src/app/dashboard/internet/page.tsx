@@ -4,6 +4,7 @@ import {
   funciones,
   Graphs,
   serverActions,
+  SimpleBarChart,
   Table,
   TopMenu,
 } from "@/components";
@@ -52,7 +53,7 @@ export default function InternetPage() {
             icon={cardProps.icon[0]}
             color={cardProps.color[0]}
             title="KWh"
-            consumoTotal={consumoTotal.toString()}
+            consumoTotal={consumoTotal}
           />
           <Card
             icon={cardProps.icon[1]}
@@ -79,7 +80,7 @@ export default function InternetPage() {
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           <Graphs.CircleChart />
           <Graphs.LinearChart />
-          <Graphs.BarChart />
+          <SimpleBarChart records={records} />
         </div>
       </div>
     </>

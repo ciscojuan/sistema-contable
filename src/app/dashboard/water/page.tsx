@@ -1,5 +1,6 @@
 "use client";
 import {
+  BarChart,
   Card,
   funciones,
   Graphs,
@@ -8,6 +9,7 @@ import {
   TopMenu,
 } from "@/components";
 import { NewRaw } from "@/components/NewRaw";
+import { SimpleBarChart } from "@/components/widgets/BarChart";
 import { bienContext } from "@/context/Context";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
@@ -79,7 +81,7 @@ export default function WaterPage() {
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           <Graphs.CircleChart />
           <Graphs.LinearChart />
-          <Graphs.BarChart />
+          <SimpleBarChart records={records} />
         </div>
       </div>
     </>

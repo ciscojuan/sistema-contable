@@ -21,7 +21,7 @@ export const Card = ({
           {title}
         </span>
         <p className="mt-1 text-3xl font-semibold text-gray-100">
-          {valorTotal ? valorTotal : consumoTotal}
+          {String(valorTotal ? valorTotal : consumoTotal)}
         </p>
       </div>
     </div>

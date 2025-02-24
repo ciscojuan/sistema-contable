@@ -18,7 +18,6 @@ export const TipoBien = () => {
     getIdBien();
   }, [nombreBien]);
 
-
   return (
     <div className="w-full max-w-sm min-w-[200px]">
       <div className="relative">

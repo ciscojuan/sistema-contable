@@ -13,6 +13,12 @@ export const getBienId = async (bien_id: string) => {
   return id;
 };
 
+export const getBienes = async () => {
+  const bienes = await prisma.bien.findMany();
+  return bienes;
+
+}
+
 export const getRecords = async (id: string | null, pathName: string) => {
   if (!id) {
     console.error("El ID es inválido:", id);
@@ -111,8 +117,12 @@ export const getTotalValues = async (bienId: string) => {
     const sumValues = (records: { valor: number }[]) =>
       records.reduce((acc, record) => acc + record.valor, 0);
 
+    // Función para sumar los consumos
+    const sumConsumes = (records: { consumo?: number }[]) =>
+      records.reduce((acc, record) => acc + (record.consumo || 0), 0);
+
     // Calcular totales
-    const totals = {
+    const vtotals = {
       agua: sumValues(agua),
       energia: sumValues(energia),
       gas: sumValues(gas),
@@ -121,7 +131,14 @@ export const getTotalValues = async (bienId: string) => {
       administracion: sumValues(administracion),
     };
 
-    return totals;
+    // Calcular totales de consumos
+    const consumos = {
+      agua: sumConsumes(agua),
+      energia: sumConsumes(energia),
+      gas: sumConsumes(gas)
+    };
+
+    return {vtotals, consumos};
   } catch (error) {
     console.error("❌ Error al calcular los valores totales:", error);
     return null;

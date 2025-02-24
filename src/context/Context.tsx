@@ -23,7 +23,7 @@ interface BienContextType {
 // Crea el contexto con un valor por defecto
 export const bienContext = createContext<BienContextType>({
   tipoBien: "Acapulco",
-  idBien: "",
+  idBien: "cb208634-6223-4294-92f2-0a13c880db3a",
   records: [],
   setTipoBien: () => {},
   setIdBien: () => {},
