@@ -3,6 +3,8 @@ import { FormEvent, useContext, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { bienContext } from "@/context/Context";
 import { addRecord } from "./actions/serverAction";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
 
 export const NewRaw = () => {
   const [consumo, setConsumo] = useState("");
@@ -12,16 +14,27 @@ export const NewRaw = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    let consumoNum = parseInt(consumo);
-    let valorNum = parseInt(valor);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = async (data: any) => {
+    const consumoNum = parseInt(data.valor);
+    const valorNum = parseInt(data.kwh);
+
+    if (!idBien) {
+      toast.error("ID del bien no disponible");
+      return;
+    }
 
     try {
       const record = await addRecord(consumoNum, valorNum, idBien, pathname);
 
       if (!record) {
-        console.error("No se pudo agregar el registro.");
+        toast.error("No se pudo agregar el registro.");
         return;
       }
 
@@ -29,20 +42,22 @@ export const NewRaw = () => {
       setRecords((prev) => [...prev, record]);
 
       // Limpia los campos del formulario
-      setConsumo("");
-      setValor("");
-
+      reset();
+      toast.success(`registro creado exitosamente!`);
       // Redirige o refresca la página
       router.refresh();
     } catch (error) {
       console.error("Error al agregar registro:", error);
+      toast.error(`no se pudo crear el registro!`);
+      reset();
     }
   };
+
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full w-lg">
       <form
         className="bg-transparent border shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-4">
           <label
@@ -56,14 +71,27 @@ export const NewRaw = () => {
             id="kwh"
             type="text"
             placeholder="Kwh"
-            value={consumo}
-            onChange={({ target }) => setConsumo(target.value)}
+            pattern="^[0-9]+$"
+            {...register("kwh", {
+              required: "El consumo es requerido",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Solo se permiten números",
+              },
+            })}
           />
+
+          {errors.kwh && (
+            <p className="text-red-500 text-sm italic">
+              {String(errors.kwh.message)}
+            </p>
+          )}
         </div>
+
         <div className="mb-6">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
+            htmlFor="valor"
           >
             Valor
           </label>
@@ -72,12 +100,20 @@ export const NewRaw = () => {
             id="valor"
             type="text"
             placeholder="$ "
-            value={valor}
-            onChange={({ target }) => setValor(target.value)}
+            pattern="^[0-9]+$"
+            {...register("valor", {
+              required: "El valor es requerido",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Solo se permiten números",
+              },
+            })}
           />
-          <p className="text-red-500 text-xs italic">
-            Please choose a password.
-          </p>
+          {errors.valor && (
+            <p className="text-red-500 text-sm italic">
+              {String(errors.valor.message)}
+            </p>
+          )}
         </div>
         <div className="flex items-center justify-between">
           <button

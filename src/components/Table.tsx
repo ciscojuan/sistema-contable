@@ -59,7 +59,13 @@ export const Table = ({ records = [] }: Props) => {
 
               {!excludedPaths.includes(path) && (
                 <th className="px-6 py-3 text-left text-md font-medium text-gray-400 uppercase tracking-wider">
-                  # GALONS
+                  {path === "/dashboard/water"
+                    ? "m³"
+                    : path === "/dashboard/gas"
+                    ? "m³"
+                    : path === "/dashboard/energia"
+                    ? "kWh"
+                    : ""}
                 </th>
               )}
 

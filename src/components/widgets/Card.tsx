@@ -13,6 +13,8 @@ export const Card = ({
   consumoTotal,
   valorTotal,
 }: Props) => {
+  const isLoading = valorTotal === undefined && consumoTotal === undefined;
+
   return (
     <div className="flex items-center justify-center bg-gray-800 bg-opacity-50 backdrop-blur-md overflow-hidden shadow-lg rounded-xl border border-gray-700 hover:-translate-y-2 transition-all duration-300 hover:shadow-card">
       <div className="flex flex-col items-center justify-center px-4 py-5 sm:p-6 ">
@@ -21,7 +23,9 @@ export const Card = ({
           {title}
         </span>
         <p className="mt-1 text-3xl font-semibold text-gray-100">
-          {String(valorTotal ? valorTotal : consumoTotal)}
+          {isLoading
+            ? "Cargando..."
+            : String(valorTotal ? valorTotal : consumoTotal)}
         </p>
       </div>
     </div>

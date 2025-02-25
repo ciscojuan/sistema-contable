@@ -1,7 +1,6 @@
 "use client";
 import { Card, Graphs, serverActions, StackedBar, TopMenu } from "@/components";
 import { bienContext } from "@/context/Context";
-import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaFireFlameCurved } from "react-icons/fa6";
@@ -47,12 +46,6 @@ export default function Overview() {
     administracion: number;
   } | null>(null);
 
-  const [consumos, setConsumos] = useState<{
-    agua: number;
-    energia: number;
-    gas: number;
-  } | null>(null);
-
   useEffect(() => {
     if (!idBien) return;
 
@@ -68,13 +61,6 @@ export default function Overview() {
             internet: 0,
             telefono: 0,
             administracion: 0,
-          }
-        );
-        setConsumos(
-          res?.consumos ?? {
-            agua: 0,
-            energia: 0,
-            gas: 0,
           }
         );
       } catch (error) {

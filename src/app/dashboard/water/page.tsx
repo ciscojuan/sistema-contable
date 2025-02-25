@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { ImCoinDollar } from "react-icons/im";
 import { IoWater } from "react-icons/io5";
+import { toast, Toaster } from "sonner";
 
 const cardProps = {
   icon: [<IoWater />, <ImCoinDollar />],
@@ -43,6 +44,7 @@ export default function WaterPage() {
 
   const consumoTotal = funciones.consumoTotal(records);
   const valorTotal = funciones.SumaValor(records);
+
   return (
     <>
       <TopMenu title="Electicity Bids" icon={cardProps.icon[0]} />
@@ -75,7 +77,6 @@ export default function WaterPage() {
 
         {/* table */}
         <Table records={records} />
-
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           <Graphs.CircleChart />

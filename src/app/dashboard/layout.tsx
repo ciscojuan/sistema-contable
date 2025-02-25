@@ -2,6 +2,7 @@
 import { SideBar } from "@/components";
 import { BienContext } from "@/context/BienContext";
 import { useState } from "react";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({
   children,
@@ -28,6 +29,7 @@ export default function DashboardLayout({
       </div>
       <div className="flex-1 overflow-auto relative z-10 my-2">
         <BienContext>
+          <Toaster richColors={true} theme="dark" />
           <main className="">{children}</main>
           <p className="text-center text-gray-500 text-xs">
             &copy; 2025 COD_ Corp. All rights reserved.
