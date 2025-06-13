@@ -8,13 +8,12 @@ import {
   TopMenu,
 } from "@/components";
 import { NewRaw } from "@/components/NewRaw";
-import { SimpleBarChart } from "@/components/widgets/SimpleBarChart";
 import { bienContext } from "@/context/Context";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { ImCoinDollar } from "react-icons/im";
 import { IoWater } from "react-icons/io5";
-import { toast, Toaster } from "sonner";
+
 
 const cardProps = {
   icon: [<IoWater />, <ImCoinDollar />],
@@ -79,9 +78,9 @@ export default function WaterPage() {
         <Table records={records} />
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
-          <Graphs.CircleChart />
-          <Graphs.LinearChart />
-          <SimpleBarChart records={records} />
+          <Graphs.CircleChart records={records} />
+          <Graphs.LinearChart records={records} />
+          <Graphs.SimpleBarChart records={records} />
         </div>
       </div>
     </>

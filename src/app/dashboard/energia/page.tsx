@@ -4,7 +4,6 @@ import {
   funciones,
   Graphs,
   serverActions,
-  SimpleBarChart,
   Table,
   TopMenu,
 } from "@/components";
@@ -24,14 +23,12 @@ export default function ElectricityPage() {
   const { idBien, records, setRecords } = useContext(bienContext);
   const [open, setOpen] = useState(false);
   const pathName = usePathname();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(`Primer console logconid: ${idBien}`)
+    console.log(`Primer console logconid: ${idBien}`);
     if (!idBien) return; // Verifica que `idBien` tenga un valor válido
 
     const getRecords = async () => {
-      setIsLoading(true); //Setting loading to true.
       try {
         const response: RecordType[] = await serverActions.getRecords(
           idBien,
@@ -40,7 +37,6 @@ export default function ElectricityPage() {
         setRecords(response); // Establece los registros correctamente
       } catch (error) {
         console.error("Error fetching records:", error);
-        setIsLoading(false); //Setting loading to false.
       }
     };
 
@@ -85,9 +81,9 @@ export default function ElectricityPage() {
 
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
-          <Graphs.CircleChart />
-          <Graphs.LinearChart />
-          <SimpleBarChart records={records} />
+          <Graphs.CircleChart records={records} />
+          <Graphs.LinearChart records={records} />
+          <Graphs.SimpleBarChart records={records} />
         </div>
       </div>
     </>

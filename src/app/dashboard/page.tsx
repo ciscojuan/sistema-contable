@@ -1,6 +1,7 @@
 "use client";
-import { Card, Graphs, serverActions, StackedBar, TopMenu } from "@/components";
+import { Card, Graphs, serverActions, TopMenu } from "@/components";
 import { bienContext } from "@/context/Context";
+
 import { useContext, useEffect, useState } from "react";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaFireFlameCurved } from "react-icons/fa6";
@@ -51,9 +52,9 @@ export default function Overview() {
 
     const getRecords = async () => {
       try {
-        const res = await serverActions.getTotalValues(idBien);
+        const resTotales = await serverActions.getTotalValues(idBien);
         setTotales(
-          res?.vtotals ?? {
+          resTotales?.vtotals ?? {
             // Evita valores null asegurando un objeto válido
             agua: 0,
             energia: 0,
@@ -70,7 +71,7 @@ export default function Overview() {
 
     getRecords();
   }, [idBien]);
-
+  console.log(totales);
   return (
     <>
       <TopMenu title="Overview" icon={iconMenu} />
@@ -113,7 +114,7 @@ export default function Overview() {
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           <Graphs.CircleChart />
           <Graphs.LinearChart />
-          <StackedBar totales={totales} />
+          <Graphs.SimpleBarChart />
         </div>
       </div>
     </>

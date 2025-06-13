@@ -1,3 +1,4 @@
+
 interface Props {
   icon: React.ReactNode;
   color: string;
@@ -24,8 +25,8 @@ export const Card = ({
         </span>
         <p className="mt-1 text-3xl font-semibold text-gray-100">
           {isLoading
-            ? "Cargando..."
-            : String(valorTotal ? valorTotal : consumoTotal)}
+            ? <span className="text-sm">Loading...</span>
+            : valorTotal ? valorTotal : consumoTotal}
         </p>
       </div>
     </div>

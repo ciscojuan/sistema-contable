@@ -4,7 +4,6 @@ import {
   funciones,
   Graphs,
   serverActions,
-  SimpleBarChart,
   Table,
   TopMenu,
 } from "@/components";
@@ -77,9 +76,9 @@ export default function MaintenancePage() {
 
         {/* widgets */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
-          <Graphs.CircleChart />
-          <Graphs.LinearChart />
-          <SimpleBarChart records={records} />
+          <Graphs.CircleChart records={records} />
+          <Graphs.LinearChart records={records} />
+          <Graphs.SimpleBarChart records={records} />
         </div>
       </div>
     </>

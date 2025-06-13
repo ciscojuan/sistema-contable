@@ -7,12 +7,16 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 
 export const NewRaw = () => {
-  const [consumo, setConsumo] = useState("");
   const [valor, setValor] = useState("");
   const { idBien, setRecords } = useContext(bienContext);
   const pathname = usePathname();
-
   const router = useRouter();
+
+  // Check if we're on a route that doesn't need the consumption field
+  const hideConsumption =
+    pathname.includes("/dashboard/maintenance") ||
+    pathname.includes("/dashboard/internet") ||
+    pathname.includes("/dashboard/mobil");
 
   const {
     register,
@@ -22,8 +26,9 @@ export const NewRaw = () => {
   } = useForm();
 
   const onSubmit = async (data: any) => {
-    const consumoNum = parseInt(data.valor);
-    const valorNum = parseInt(data.kwh);
+    // If we're on a route that doesn't need consumption, set it to 0
+    const consumoNum = hideConsumption ? 0 : data.kwh ? parseInt(data.kwh) : 0;
+    const valorNum = parseInt(data.valor);
 
     if (!idBien) {
       toast.error("ID del bien no disponible");
@@ -31,7 +36,7 @@ export const NewRaw = () => {
     }
 
     try {
-      const record = await addRecord(consumoNum, valorNum, idBien, pathname);
+      const record = await addRecord(valorNum, consumoNum, idBien, pathname);
 
       if (!record) {
         toast.error("No se pudo agregar el registro.");
@@ -56,37 +61,39 @@ export const NewRaw = () => {
   return (
     <div className="w-full w-lg">
       <form
-        className="bg-transparent border shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-transparent border shadow-md rounded-xl px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="kwh"
-          >
-            Consumo
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="kwh"
-            type="text"
-            placeholder="Kwh"
-            pattern="^[0-9]+$"
-            {...register("kwh", {
-              required: "El consumo es requerido",
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "Solo se permiten números",
-              },
-            })}
-          />
+        {!hideConsumption && (
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="kwh"
+            >
+              Consumo
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="kwh"
+              type="text"
+              placeholder="Kwh"
+              pattern="^[0-9]+$"
+              {...register("kwh", {
+                required: "El consumo es requerido",
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Solo se permiten números",
+                },
+              })}
+            />
 
-          {errors.kwh && (
-            <p className="text-red-500 text-sm italic">
-              {String(errors.kwh.message)}
-            </p>
-          )}
-        </div>
+            {errors.kwh && (
+              <p className="text-red-500 text-sm italic">
+                {String(errors.kwh.message)}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="mb-6">
           <label

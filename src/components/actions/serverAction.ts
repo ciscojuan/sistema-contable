@@ -3,6 +3,13 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+interface Props {
+  month: string;
+  valor: number;
+  consumo: number;
+  bienId: string;
+}
+
 export const getBienId = async (bien_id: string) => {
   const id = await prisma.bien.findFirst({
     where: {
@@ -16,10 +23,14 @@ export const getBienId = async (bien_id: string) => {
 export const getBienes = async () => {
   const bienes = await prisma.bien.findMany();
   return bienes;
+};
 
-}
-
-export const getRecords = async (id: string | null, pathName: string) => {
+export const getRecords = async (
+  id: string | null,
+  pathName: string,
+  page: number = 1,
+  limit: number = 12
+) => {
   if (!id) {
     console.error("El ID es inválido:", id);
     return null;
@@ -52,7 +63,9 @@ export const getRecords = async (id: string | null, pathName: string) => {
   try {
     const records = await model.findMany({
       where: { bienId: id },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
+      skip: (page - 1) * limit,
+      take: limit,
     });
 
     return records ?? [];
@@ -71,8 +84,8 @@ export const addRecord = async (
   const path = pathname.split("/")[2];
 
   const mapping: Record<string, any> = {
-    water: prisma.energia,
-    energia: prisma.agua,
+    water: prisma.agua,
+    energia: prisma.energia,
     gas: prisma.gas,
     internet: prisma.internet,
     mobil: prisma.telefono,
@@ -102,16 +115,17 @@ export const getTotalValues = async (bienId: string) => {
   }
 
   try {
-    // Consultas a todas las tablas en paralelo para optimizar tiempos
-    const [agua, energia, gas, internet, telefono, administracion] =
-      await Promise.all([
-        prisma.agua.findMany({ where: { bienId } }),
-        prisma.energia.findMany({ where: { bienId } }),
-        prisma.gas.findMany({ where: { bienId } }),
-        prisma.internet.findMany({ where: { bienId } }),
-        prisma.telefono.findMany({ where: { bienId } }),
-        prisma.administracion.findMany({ where: { bienId } }),
-      ]);
+    // Consultas a todas las tablas en paralelo para optimizar tiempos y guardar el resultado en una variable
+    const modelos = await Promise.all([
+      prisma.agua.findMany({ where: { bienId } }),
+      prisma.energia.findMany({ where: { bienId } }),
+      prisma.gas.findMany({ where: { bienId } }),
+      prisma.internet.findMany({ where: { bienId } }),
+      prisma.telefono.findMany({ where: { bienId } }),
+      prisma.administracion.findMany({ where: { bienId } }),
+    ]);
+    // desestructurar cada entidad de records
+    const [agua, energia, gas, internet, telefono, administracion] = modelos;
 
     // Función para sumar los valores
     const sumValues = (records: { valor: number }[]) =>
@@ -135,10 +149,10 @@ export const getTotalValues = async (bienId: string) => {
     const consumos = {
       agua: sumConsumes(agua),
       energia: sumConsumes(energia),
-      gas: sumConsumes(gas)
+      gas: sumConsumes(gas),
     };
 
-    return {vtotals, consumos};
+    return { vtotals, consumos };
   } catch (error) {
     console.error("❌ Error al calcular los valores totales:", error);
     return null;

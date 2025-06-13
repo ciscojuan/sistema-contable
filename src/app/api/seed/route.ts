@@ -35,67 +35,54 @@ export async function POST(request: Request) {
 
     const aguaObjects = await prisma.agua.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 20, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 25, valor: 250000 },
-        { bienId: sNacienteId.bien_id, consumo: 30, valor: 300000 },
-        { bienId: sNacienteId.bien_id, consumo: 35, valor: 350000 },
-        { bienId: sNacienteId.bien_id, consumo: 1, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 6, valor: 127370 },
+
+        { bienId: sNacienteId.bien_id, consumo: 3, valor: 100270 },
       ],
     });
 
     const energiaObjects = await prisma.energia.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 20, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 25, valor: 250000 },
-        { bienId: sNacienteId.bien_id, consumo: 30, valor: 300000 },
-        { bienId: sNacienteId.bien_id, consumo: 35, valor: 350000 },
-        { bienId: sNacienteId.bien_id, consumo: 1, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 91, valor: 67860 },
+        { bienId: aAcapulcoId.bien_id, consumo: 12, valor: 90000 },
+        { bienId: sNacienteId.bien_id, consumo: 12, valor: 10530 },
+        { bienId: sNacienteId.bien_id, consumo: 8, valor: 5120 },
       ],
     });
 
     const gasObjects = await prisma.gas.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, consumo: 15, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 20, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, consumo: 25, valor: 250000 },
-        { bienId: sNacienteId.bien_id, consumo: 30, valor: 300000 },
-        { bienId: sNacienteId.bien_id, consumo: 35, valor: 350000 },
-        { bienId: sNacienteId.bien_id, consumo: 1, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, consumo: 5, valor: 29210 },
+        { bienId: aAcapulcoId.bien_id, consumo: 7, valor: 41080 },
+        { bienId: sNacienteId.bien_id, consumo: 2, valor: 6660 },
+        { bienId: sNacienteId.bien_id, consumo: 1, valor: 5420 },
       ],
     });
 
     const internetObjects = await prisma.internet.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, valor: 250000 },
-        { bienId: sNacienteId.bien_id, valor: 300000 },
-        { bienId: sNacienteId.bien_id, valor: 350000 },
-        { bienId: sNacienteId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 88220 },
+        { bienId: aAcapulcoId.bien_id, valor: 88970 },
+
+        { bienId: sNacienteId.bien_id, valor: 100315 },
+        { bienId: sNacienteId.bien_id, valor: 95975 },
       ],
     });
 
     const telefonoObjects = await prisma.telefono.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, valor: 250000 },
-        { bienId: sNacienteId.bien_id, valor: 300000 },
-        { bienId: sNacienteId.bien_id, valor: 350000 },
-        { bienId: sNacienteId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 91490 },
+        { bienId: aAcapulcoId.bien_id, valor: 101064 },
+        { bienId: aAcapulcoId.bien_id, valor: 42900 },
       ],
     });
 
     const administracionObjects = await prisma.administracion.createMany({
       data: [
-        { bienId: aAcapulcoId.bien_id, valor: 150000 },
-        { bienId: aAcapulcoId.bien_id, valor: 200000 },
-        { bienId: aAcapulcoId.bien_id, valor: 250000 },
-        { bienId: sNacienteId.bien_id, valor: 300000 },
-        { bienId: sNacienteId.bien_id, valor: 350000 },
-        { bienId: sNacienteId.bien_id, valor: 150000 },
+        { bienId: aAcapulcoId.bien_id, valor: 353000 },
+        { bienId: aAcapulcoId.bien_id, valor: 353000 },
+        { bienId: sNacienteId.bien_id, valor: 271500 },
+        { bienId: sNacienteId.bien_id, valor: 271500 },
       ],
     });
 
